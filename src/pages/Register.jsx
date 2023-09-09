@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../style.scss";
 import add from "../image/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -44,6 +44,7 @@ const Register = () => {
             });
 
             // to add or update a document in a Firestore collection with name "users"
+            // it is like storing in database in json format
             await setDoc(doc(db, "users", res?.user?.uid), {
               uid: res?.user?.uid,
               name,
@@ -51,7 +52,7 @@ const Register = () => {
               photoURL: downloadURL,
             });
 
-            // await setDoc(doc(db, "userChats", res?.user?.uid), {});
+            await setDoc(doc(db, "userChats", res?.user?.uid), {});
 
             navigate("/");
           });
@@ -84,7 +85,7 @@ const Register = () => {
           {error && <span>Something went wrong</span>}
         </form>
         <p>
-          Already have an account? <a href="/">Login</a>
+          Already have an account? <Link to="/login">Sign In</Link>
         </p>
       </div>
     </div>
